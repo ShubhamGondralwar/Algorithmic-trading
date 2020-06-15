@@ -1,0 +1,52 @@
+<html>
+<title>Stock Price Predicting App</title>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<center>
+<div class="imgcontainer">
+<img src="/static/images/info.jpg" alt = "SBI" >
+</div>
+<h1 style="background-color:#6495ED;">ALGORITHMIC TRADING</h1>
+<h1 style="color:DarkCyan;">Automated Stock Open Price Prediction for Infosys</h1>
+</centre>
+   <h1> <table>  
+        <tr><td>Infosys Limited Adj Close</td><td>{{livevaluesinfo[0]}}</td>
+        <tr><td>HANG SENG INDEX(^HSI) AdjClose</td><td>{{livevaluesinfo[1]}}</td>
+        <tr><td>Nikkei 225 (^N225) AdjClose</td><td>{{livevaluesinfo[2]}}</td>
+        <tr><td>NIFTY 50 (^NSEI) AdjClose</td><td>{{livevaluesinfo[3]}}</td>
+        <tr><td>NASDAQ Composite (^IXIC) AdjClose</td><td>{{livevaluesinfo[4]}}</td>
+        <tr><td>Dow Jones Industrial Average (^DJI) AdjClose</td><td>{{livevaluesinfo[5]}}</td>      
+    </table>  </h1>
+<p id="demo"></p>
+<input type="hidden" id="a" value="{{ls}}">
+<script>
+function myFunction() {
+  var x = document.getElementById("myURL").value;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+     <h1><p style="color:#6495ED">THE EXPECTED OPEN PRICE IS:&nbsp;&nbsp;<span id="predict"></span></p></h1>
+</body>
+<script>
+var formData = document.getElementById('a').value
+console.log(formData)
+var host = "http://"+window.location.host +'/prediction/infosys'
+
+$.ajax({
+    url: host,
+    type: 'POST',
+    data : formData,
+  contentType: 'application/json',
+    success: function(response){
+    console.log(response)
+    document.getElementById('predict').innerHTML = response.predict
+        // do whatever you want with response
+     },
+    error: function(error){
+      console.log(error)
+    }
+});
+</script>
+</html>

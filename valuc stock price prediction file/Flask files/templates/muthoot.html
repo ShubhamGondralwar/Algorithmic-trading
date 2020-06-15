@@ -1,0 +1,54 @@
+<html>
+<title>Stock Price Predicting App</title>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<center>
+<div class="imgcontainer">
+<img src="/static/images/muthoot-og-logo.jpg" alt = "SBI" >
+</div>
+<h1 style="background-color:#B22222;">ALGORITHMIC TRADING</h1>
+<h1 style="color:Chocolate;">Automated Stock Open Price Prediction For Muthoot Finance Limited  </h1>
+</centre>
+   <h1> <table>  
+        <tr><td>S&P/ASX 200(^AXJO) AdjClose</td><td>{{livevaluesmutt[0]}}</td>
+        <tr><td>HANG SENG INDEX(^HSI) AdjClose</td><td>{{livevaluesmutt[1]}}</td>
+        <tr><td>Nikkei 225 (^N225) AdjClose</td><td>{{livevaluesmutt[2]}}</td>
+        <tr><td>NIFTY 50 (^NSEI) AdjClose</td><td>{{livevaluesmutt[3]}}</td>
+        <tr><td>NASDAQ Composite (^IXIC) AdjClose</td><td>{{livevaluesmutt[4]}}</td> 
+        <tr><td>Muthoot Finance Limited (MUTHOOTFIN.NS) Adj Close</td><td>{{livevaluesmutt[5]}}</td>    
+        <tr><td> Dow Jones Industrial AverageAdjClose</td><td>{{livevaluesmutt[6]}}</td>
+        <tr><td>S&P 500 (^GSPC)AdjClose</td><td>{{livevaluesmutt[7]}}</td>   
+    </table>  </h1>
+<p id="demo"></p>
+<input type="hidden" id="a" value="{{ls}}">
+<script>
+function myFunction() {
+  var x = document.getElementById("myURL").value;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+     <h1><p style="color:#B22222">THE EXPECTED OPEN PRICE IS:&nbsp;&nbsp;<span id="predict"></span></p></h1>
+</body>
+<script>
+var formData = document.getElementById('a').value
+console.log(formData)
+var host = "http://"+window.location.host +'/prediction/muthoot'
+
+$.ajax({
+    url: host,
+    type: 'POST',
+    data : formData,
+  contentType: 'application/json',
+    success: function(response){
+    console.log(response)
+    document.getElementById('predict').innerHTML = response.predict
+        // do whatever you want with response
+     },
+    error: function(error){
+      console.log(error)
+    }
+});
+</script>
+</html>

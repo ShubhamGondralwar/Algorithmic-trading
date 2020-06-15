@@ -1,0 +1,50 @@
+<html>
+<title>Stock Price Predicting App</title>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<center>
+<div class="imgcontainer">
+<img src="/static/images/pnb.jpg" alt = "SBI" >
+</div>
+<h1 style="background-color:#A52A2A;">ALGORITHMIC TRADING</h1>
+<h1 style="color:Brown;">Automated Stock Open Price Prediction for Punjab National Bank</h1>
+</centre>
+   <h1> <table>  
+        <tr><td>Punjab National Bank Adj Close</td><td>{{livevaluespnb[0]}}</td>
+        <tr><td>SSE Composite Index (000001.SS) open</td><td>{{livevaluespnb[1]}}</td>  
+    </table>  </h1>
+<p id="demo"></p>
+<input type="hidden" id="a" value="{{ls}}">
+<script>
+function myFunction() {
+  var x = document.getElementById("myURL").value;
+  document.getElementById("demo").innerHTML = x;
+}
+</script>
+
+<h1><p style="color:#A52A2A">THE EXPECTED OPEN PRICE IS:&nbsp;&nbsp;<span id="predict"></span></p></h1>
+    
+</body>
+<script>
+var formData = document.getElementById('a').value
+console.log(formData)
+var host = "http://"+window.location.host +'/prediction/pnb'
+
+$.ajax({
+    url: host,
+    type: 'POST',
+    data : formData,
+  contentType: 'application/json',
+    success: function(response){
+    console.log(response)
+    document.getElementById('predict').innerHTML = response.predict
+        // do whatever you want with response
+     },
+    error: function(error){
+      console.log(error)
+    }
+});
+</script>
+</html>
